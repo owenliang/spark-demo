@@ -18,7 +18,7 @@ import scala.Tuple2;
 
 import java.io.IOException;
 
-public class Hdfs2RDD {
+public class Text2Seq {
     // 静态内部类
     private static class MyPairFunction implements PairFunction<String, NullWritable, Text> {
         public Tuple2<NullWritable, Text> call(String s) throws Exception {
@@ -45,6 +45,6 @@ public class Hdfs2RDD {
         conf.setBoolean(FileOutputFormat.COMPRESS, true);   // 开启压缩
         conf.setClass(FileOutputFormat.COMPRESS_CODEC, GzipCodec.class, CompressionCodec.class);    // 压缩类型GZIP，父类是CompressionCodec
         conf.set(FileOutputFormat.COMPRESS_TYPE, SequenceFile.CompressionType.BLOCK.toString());    // 设置块级压缩
-        pairRDD.saveAsNewAPIHadoopFile(path, NullWritable.class, Text.class, SequenceFileOutputFormat.class, conf); // sequenceFile的K是null，V是text
+        pairRDD.saveAsNewAPIHadoopFile(path, NullWritable.class, Text.class, SequenceFileOutputFormat.class, conf); // sequenceFile的K是NullWritable，V是text
     }
 }
