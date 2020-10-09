@@ -14,7 +14,7 @@ import java.util.List;
 // 本地数据 转 RDD
 public class Collection2Text {
     public void run(FileSystem dfs, JavaSparkContext sc) throws IOException {
-        String path = "Collection2RDD";
+        String path = "/Collection2RDD";
 
         // 删除输出目录
         dfs.delete(new Path(path), true);
