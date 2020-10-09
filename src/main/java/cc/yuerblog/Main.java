@@ -1,8 +1,6 @@
 package cc.yuerblog;
 
-import cc.yuerblog.dag.Collection2Text;
-import cc.yuerblog.dag.Seq2RDD;
-import cc.yuerblog.dag.Text2Seq;
+import cc.yuerblog.dag.*;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.spark.SparkConf;
@@ -19,17 +17,24 @@ public class Main {
             SparkConf conf = new SparkConf().setAppName("spark-demo");              // 配置
             JavaSparkContext sc = new JavaSparkContext(conf);               // Spark连接
 
-            // JAVA数组转RDD
-            Collection2Text collection2Text = new Collection2Text();
-            collection2Text.run(dfs, sc);
+//            // JAVA数组转RDD
+//            Collection2Text collection2Text = new Collection2Text();
+//            collection2Text.run(dfs, sc);
+//
+//            // HDFS Text文件转RDD，RDD转sequenceFile文件
+//            Text2Seq text2Seq = new Text2Seq();
+//            text2Seq.run(dfs, sc);
+//
+//            // Hdfs SequenceFile转RDD，简单RDD计算
+//            Seq2RDD seq2RDD = new Seq2RDD();
+//            seq2RDD.run(dfs, sc);
+//
+//            // RDD transformers示例
+//            RDDTrans rddTrans = new RDDTrans();
+//            rddTrans.run(dfs, sc);
 
-            // HDFS Text文件转RDD，RDD转sequenceFile文件
-            Text2Seq text2Seq = new Text2Seq();
-            text2Seq.run(dfs, sc);
-
-            // Hdfs SequenceFile转RDD，简单RDD计算
-            Seq2RDD seq2RDD = new Seq2RDD();
-            seq2RDD.run(dfs, sc);
+            BrodAndAccu brodAndAccu = new BrodAndAccu();
+            brodAndAccu.run(dfs, sc);
         } catch (IOException e) {
             e.printStackTrace();
         }
