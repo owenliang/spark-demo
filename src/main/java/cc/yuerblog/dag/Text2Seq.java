@@ -19,13 +19,6 @@ import scala.Tuple2;
 import java.io.IOException;
 
 public class Text2Seq {
-    // 静态内部类
-    private static class MyPairFunction implements PairFunction<String, NullWritable, Text> {
-        public Tuple2<NullWritable, Text> call(String s) throws Exception {
-            return new Tuple2<NullWritable, Text>(NullWritable.get(), new Text(s));
-        }
-    }
-
     public void run(FileSystem dfs, JavaSparkContext sc) throws IOException {
         String path = "/Hdfs2RDD";
 
@@ -46,5 +39,12 @@ public class Text2Seq {
         conf.setClass(FileOutputFormat.COMPRESS_CODEC, GzipCodec.class, CompressionCodec.class);    // 压缩类型GZIP，父类是CompressionCodec
         conf.set(FileOutputFormat.COMPRESS_TYPE, SequenceFile.CompressionType.BLOCK.toString());    // 设置块级压缩
         pairRDD.saveAsNewAPIHadoopFile(path, NullWritable.class, Text.class, SequenceFileOutputFormat.class, conf); // sequenceFile的K是NullWritable，V是text
+    }
+
+    // 静态内部类
+    private static class MyPairFunction implements PairFunction<String, NullWritable, Text> {
+        public Tuple2<NullWritable, Text> call(String s) throws Exception {
+            return new Tuple2<NullWritable, Text>(NullWritable.get(), new Text(s));
+        }
     }
 }
